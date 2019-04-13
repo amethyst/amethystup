@@ -7,6 +7,14 @@ check_cmd() {
 	return $?
 }
 
+sudu() {
+	if test `whoami` != 'root' && check_cmd sudo; then
+		sudo sh -c "$*"
+	else
+		sh -c "$*"
+	fi 
+}
+
 install_rustup() {
 	check_cmd rustup || curl https://sh.rustup.rs -sSf | sh
 }
@@ -25,23 +33,23 @@ deps_auto() {
 }
 
 deps_ubuntu() {
-	sudo apt update
-	sudo apt install curl gcc
+	sudu apt update
+	sudu apt install curl gcc
 	install_rustup
-	sudo apt install pkg-config libasound2-dev libssl-dev cmake libfreetype6-dev libexpat1-dev libxcb-composite0-dev
+	sudu apt install pkg-config libasound2-dev libssl-dev cmake libfreetype6-dev libexpat1-dev libxcb-composite0-dev
 }
 
 deps_fedora() {
-	sudo dnf install curl gcc
+	sudu dnf install curl gcc
 	install_rustup
-	sudo dnf install pkgconfig alsa-lib-devel openssl-devel cmake freetype-devel expat-devel libxcb-devel
+	sudu dnf install pkgconfig alsa-lib-devel openssl-devel cmake freetype-devel expat-devel libxcb-devel
 }
 
 deps_arch() {
-	sudo pacman -Sy
-	sudo pacman -S curl gcc
+	sudu pacman -Sy
+	sudu pacman -S curl gcc
 	install_rustup
-	sudo pacman -S pkconfig alsa-devel openssl-devel cmake freetype-devel expat-devel xcb-devel
+	sudu pacman -S pkconfig alsa-devel openssl-devel cmake freetype-devel expat-devel xcb-devel
 }
 
 install_amethyst() {
