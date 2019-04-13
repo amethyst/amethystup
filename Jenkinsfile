@@ -10,7 +10,6 @@ pipeline {
 	        }
             steps {
 		        sh './setup.sh'
-		        sh 'command -v amethyst || exit 1'
 	        }
 	    }
 	    stage("fedora") {
@@ -22,7 +21,6 @@ pipeline {
 	        }
             steps {
 		        sh './setup.sh'
-		        sh 'command -v amethyst || exit 1'
 	        }
 	    }
 	    stage("arch") {
@@ -34,7 +32,6 @@ pipeline {
 	        }
             steps {
 		        sh './setup.sh'
-		        sh 'command -v amethyst || exit 1'
 	        }
 	    }
     }

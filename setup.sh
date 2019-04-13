@@ -47,7 +47,7 @@ deps_arch() {
 install_amethyst() {
 	check_cmd || . ~/.cargo/env
 	check_cmd cargo || { echo "Error: Cargo not found"; exit 1; }
-	check_cmd amethyst || cargo install --force amethyst_tools;
+	check_cmd amethyst || cargo install --force amethyst_tools || { echo "Failed to install Amethyst CLI"; exit 1; };
 }
 
 print_post_installation() {
