@@ -8,7 +8,7 @@ check_cmd() {
 }
 
 sudu() {
-	if test `whoami` != 'root' && check_cmd sudo; then
+	if check_cmd sudo; then
 		sudo sh -c "$*"
 	else
 		sh -c "$*"
@@ -16,7 +16,7 @@ sudu() {
 }
 
 install_rustup() {
-	check_cmd rustup || curl https://sh.rustup.rs -sSf | sh
+	check_cmd rustup || curl https://sh.rustup.rs -sSf | sh -s -- -y
 }
 
 deps_auto() {
@@ -33,23 +33,23 @@ deps_auto() {
 }
 
 deps_ubuntu() {
-	sudu apt update
-	sudu apt install curl gcc
+	sudu apt-get update --yes
+	sudu apt-get install --yes curl gcc
 	install_rustup
-	sudu apt install pkg-config libasound2-dev libssl-dev cmake libfreetype6-dev libexpat1-dev libxcb-composite0-dev
+	sudu apt install --yes pkg-config libasound2-dev libssl-dev cmake libfreetype6-dev libexpat1-dev libxcb-composite0-dev
 }
 
 deps_fedora() {
-	sudu dnf install curl gcc
+	sudu dnf install -y curl gcc
 	install_rustup
-	sudu dnf install pkgconfig alsa-lib-devel openssl-devel cmake freetype-devel expat-devel libxcb-devel
+	sudu dnf install -y pkgconfig alsa-lib-devel openssl-devel cmake freetype-devel expat-devel libxcb-devel
 }
 
 deps_arch() {
-	sudu pacman -Sy
+	sudu pacman -Sy --noconfirm
 	sudu pacman -S curl gcc
 	install_rustup
-	sudu pacman -S pkconfig alsa-devel openssl-devel cmake freetype-devel expat-devel xcb-devel
+	sudu pacman -S --noconfirm pkconfig alsa-devel openssl-devel cmake freetype-devel expat-devel xcb-devel
 }
 
 install_amethyst() {
